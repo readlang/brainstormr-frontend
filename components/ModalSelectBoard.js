@@ -1,12 +1,14 @@
 "use client"
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { ContextStore } from "./Context";
 // import { postPost } from '@/appLogic/postFetches';
 // import { postComment } from "@/appLogic/commentFetches";
 
 export default function ModalSelectBoard ({type, commText, commND,commPC, postTitle, postUrl}) {
     const router = useRouter()
-
+    const contextObj = useContext(ContextStore)
+    const isSignedIn = contextObj.user && contextObj.user.username
     
     async function submitPost(event) {
         event.preventDefault()
@@ -31,7 +33,7 @@ export default function ModalSelectBoard ({type, commText, commND,commPC, postTi
     ]
 
     const [isModalOpen, setIsModalOpen] = useState(true)
-    const isSignedIn = true;
+    
 
     return( <>
         <dialog id="modalSelectBoard" className={`modal ${isModalOpen ? "modal-open" : null}`}>
@@ -62,7 +64,7 @@ export default function ModalSelectBoard ({type, commText, commND,commPC, postTi
                         </div>
                     </div> 
                     
-                    { isSignedIn ? 
+                    { isSignedIn ? null :
                         <>
                             <div className="divider lg:divider-horizontal font-bold px-5">OR</div> 
                             <div className="flex flex-col    ">
@@ -82,7 +84,6 @@ export default function ModalSelectBoard ({type, commText, commND,commPC, postTi
                                 you can still use brainstormr.
                             </div>
                         </>
-                        : null
                     }
                 </div>
 
