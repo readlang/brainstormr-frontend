@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Menu } from './Menu';
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ProfileDropdown } from "./ProfileDropdown";
-// import UserDisplay from './UserDisplay';
+import UserDisplay from './UserDisplay';
 
 export function Header() {
     return(
@@ -12,7 +12,7 @@ export function Header() {
                     <Menu/>
                     
                     <Link href="/" className='text-2xl '>
-                        Brainstormr&nbsp;
+                        Brainstormr
                     </Link>
                 </div>
                 
@@ -22,7 +22,7 @@ export function Header() {
                 </div>
                     
             </div>
-            {/* <div className="flex justify-end mb-1"> <UserDisplay/> </div> */}
+            <div className="flex justify-end mb-1"> <UserDisplay/> </div>
             <hr/>
         </nav>
     )

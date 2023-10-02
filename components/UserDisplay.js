@@ -5,7 +5,11 @@ import { authenticateFetch } from '@/appLogic/userFetches';
 
 export default function UserDisplay() {
     const contextObj = useContext(ContextStore)
-    useEffect(() => { authenticateFetch().then(data => contextObj.setUser(data.user) )}, [])
+    useEffect(() => { 
+        authenticateFetch()
+        .then(data => contextObj.setUser(data.user) )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <span className='text-xs font-bold' >

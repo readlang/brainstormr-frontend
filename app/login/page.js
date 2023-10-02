@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { ContextStore } from "../../components/Context";
-// import { loginFetch } from '@/appLogic/userFetches';
+import { loginFetch } from '@/appLogic/userFetches';
 
 export default function Page() {
     const contextObj = useContext(ContextStore)
@@ -23,8 +23,8 @@ export default function Page() {
             <br/>
             <div className="flex flex-col lg:flex-row justify-center items-center">
                 <div className="text-left m-4">
-                    <h1 className="text-5xl font-bold">Welcome back,</h1>
-                    <h1 className="text-5xl font-bold">please log in</h1>
+                    <h1 className="text-5xl font-bold">Welcome back!</h1>
+                    <h1 className="text-5xl font-bold">Please log in</h1>
                     <p className="py-6">Need to sign up? <Link href="/signup" className="underline">Create Account</Link> </p>
                 </div>
                 
