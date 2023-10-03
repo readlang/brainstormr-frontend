@@ -1,39 +1,54 @@
 "use client"
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from 'next/link'
 import { ContextStore } from "./Context";
-// import { postPost } from '@/appLogic/postFetches';
-// import { postComment } from "@/appLogic/commentFetches";
+import { getMyBoards, postBoard } from '@/appLogic/boardFetches';
 
-export default function ModalSelectBoard ({type, commText, commND,commPC, postTitle, postUrl}) {
+export default function ModalSelectBoard () {
     const router = useRouter()
     const contextObj = useContext(ContextStore)
     const isSignedIn = contextObj.user && contextObj.user.username
-    
-    async function submitPost(event) {
-        event.preventDefault()
-        // const data = await postPost(postTitle, postUrl, params.siteId)
-        console.log(data)
-        const newPosts = [...sitePosts.posts, data ] 
-        setSitePosts({...sitePosts, posts: newPosts })
-        window.my_modal_2.close()
-    }
-
-    async function submitComment(event) {
-        event.preventDefault()
-        // const data = await postComment(commText, parseInt(commND), parseInt(commPC), parseInt(params.postId) )
-        console.log(data)
-        const newComments = [...postComments.comments, data]
-        setPostComments({...postComments, comments: newComments})
-        window.my_modal_2.close()
-    }
-
-    const boardArray = [
-        "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 1x", "Item 2x", "Item 3x", "Item 4x", "Item 5x"
-    ]
-
+    // const [boardArray, setBoardArray] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(true)
-    
+    const [newBoardName, setNewBoardName] = useState("")
+
+    async function submitNewBoard(event) {
+        event.preventDefault()
+        
+        postBoard(newBoardName)
+        .then(data =>{
+            console.log(data)
+
+            if (data.error) {
+                // throw error
+                console.log("Error: ", data)
+            } else {
+                contextObj.setMyBoards([...contextObj.myBoards, data])
+                contextObj.setActiveBoard(data)
+                router.push(`/board/${data.uuid}`)
+            }
+            // add data to contextObj
+            // set activeBoard to new board
+            // navigate to new page without refresh (don't lose contextObj)
+
+        })
+        
+        setIsModalOpen(false)
+    }
+
+    function selectBoard(boardObj) {
+        ////////////////////////// write the logic to select the board
+        // navigate to new board page
+    }
+
+    useEffect(() => {
+        getMyBoards()
+        .then(data => {
+            // setBoardArray(data)
+            contextObj.setMyBoards(data)
+        })
+    }, [])
 
     return( <>
         <dialog id="modalSelectBoard" className={`modal ${isModalOpen ? "modal-open" : null}`}>
@@ -45,22 +60,28 @@ export default function ModalSelectBoard ({type, commText, commND,commPC, postTi
                         <div className="overflow-y-auto max-h-72">
                             <ul className="menu w-auto p-0  ">
                                 <hr/>
-                                {boardArray.length === 0 ?
-                                    <div>There no boards yet. Please create a new board below.</div> 
-                                    : 
-                                    boardArray.map(item => 
-                                        <div key={item}>
-                                            <li><a className="text-xl" >{item}</a></li>
+                                {contextObj.myBoards && contextObj.myBoards.length ? 
+                                    contextObj.myBoards.map(item => 
+                                        <div key={item.name}>
+                                            <li>
+                                                <Link href={`/board/${item.uuid}`} className="text-xl" >{item.name}</Link>
+                                            </li>
                                             <hr/>
                                         </div>
                                     )
+                                    :
+                                    <div>There no boards yet. Please create a new board below.</div> 
                                 }
                             </ul>
                         </div>
                         <h3 className="font-bold mt-4 mb-2" >Or create a new board</h3>
                         <div className="flex">    
-                            <input type="text" name="new board name" placeholder="new board name" className="input input-bordered w-full"/>
-                            <button className="btn ml-3">Create</button>
+                            <input type="text" name="new board name" placeholder="new board name" className="input input-bordered w-full"
+                                value={newBoardName} onChange={e => setNewBoardName(e.target.value)}
+                            />
+                            <div className={newBoardName.trim().length ? null : "tooltip"} data-tip="provide a name"  >
+                                <button className="btn ml-3" onClick={e =>submitNewBoard(e)} disabled={!newBoardName.trim().length}>Create</button>
+                            </div>
                         </div>
                     </div> 
                     

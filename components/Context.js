@@ -4,15 +4,25 @@ import { createContext, useState } from "react";
 export const ContextStore = createContext({})
 
 export default function Context({ children }) {
-    const [valX, setValX] = useState(100)
-    const [token, setToken] = useState("")
+    const [myBoards, setMyBoards] = useState([])
+    const [activeBoard, setActiveBoard] = useState({})
     const [user, setUser] = useState({})
+    const [token, setToken] = useState("")
+
 
     const contextObj ={
-        valX: valX, setValX: setValX,
-        token: token, setToken: setToken,
-        user: user, setUser: setUser,
+        myBoards: myBoards,
+        setMyBoards: setMyBoards,
+        activeBoard: activeBoard,
+        setActiveBoard: setActiveBoard,
+        token: token, 
+        setToken: setToken,
+        user: user, 
+        setUser: setUser,
     }
+
+    // error object in content?
+    // perhaps this is how error modal pops up?
     
     return(
         <ContextStore.Provider value={contextObj}>
