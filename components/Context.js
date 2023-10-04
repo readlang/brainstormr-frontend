@@ -11,14 +11,10 @@ export default function Context({ children }) {
 
 
     const contextObj ={
-        myBoards: myBoards,
-        setMyBoards: setMyBoards,
-        activeBoard: activeBoard,
-        setActiveBoard: setActiveBoard,
-        token: token, 
-        setToken: setToken,
-        user: user, 
-        setUser: setUser,
+        myBoards: myBoards, setMyBoards: setMyBoards,
+        activeBoard: activeBoard, setActiveBoard: setActiveBoard,
+        token: token, setToken: setToken,
+        user: user, setUser: setUser,
     }
 
     // error object in content?

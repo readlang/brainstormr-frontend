@@ -11,6 +11,17 @@ export async function postBoard(name) {
     return data
 }
 
+export async function getBoard(boardUuid) {
+    console.log("getBoard")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/board/${boardUuid}`, {
+        method: 'get',
+        credentials: 'include'
+    })
+    const data = await response.json()
+    console.log(data)
+    return data
+}
+
 export async function getMyBoards() {
     console.log("GetMyBoards")
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/board/myboards`, {

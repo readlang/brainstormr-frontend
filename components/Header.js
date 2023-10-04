@@ -3,6 +3,7 @@ import { Menu } from './Menu';
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { ProfileDropdown } from "./ProfileDropdown";
 import UserDisplay from './UserDisplay';
+import BoardDisplay from './BoardDisplay';
 
 export function Header() {
     return(
@@ -10,9 +11,8 @@ export function Header() {
             <div className="flex justify-between pt-5 items-center" >
                 <div className="flex items-center">
                     <Menu/>
-                    
-                    <Link href="/" className='text-2xl '>
-                        Brainstormr
+                    <Link href="/" className='text-xl font-bold text-gray-700 tracking-tighter'>
+                        BRAINSTORMR
                     </Link>
                 </div>
                 
@@ -22,7 +22,9 @@ export function Header() {
                 </div>
                     
             </div>
-            <div className="flex justify-end mb-1"> <UserDisplay/> </div>
+            <div className="flex justify-between mb-1"> 
+                <BoardDisplay/> <UserDisplay/> 
+            </div>
             <hr/>
         </nav>
     )

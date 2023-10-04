@@ -9,17 +9,13 @@ export default function ModalSelectBoard () {
     const router = useRouter()
     const contextObj = useContext(ContextStore)
     const isSignedIn = contextObj.user && contextObj.user.username
-    // const [boardArray, setBoardArray] = useState([])
-    const [isModalOpen, setIsModalOpen] = useState(true)
     const [newBoardName, setNewBoardName] = useState("")
 
     async function submitNewBoard(event) {
         event.preventDefault()
-        
         postBoard(newBoardName)
         .then(data =>{
             console.log(data)
-
             if (data.error) {
                 // throw error
                 console.log("Error: ", data)
@@ -28,33 +24,20 @@ export default function ModalSelectBoard () {
                 contextObj.setActiveBoard(data)
                 router.push(`/board/${data.uuid}`)
             }
-            // add data to contextObj
-            // set activeBoard to new board
-            // navigate to new page without refresh (don't lose contextObj)
-
         })
-        
-        setIsModalOpen(false)
-    }
-
-    function selectBoard(boardObj) {
-        ////////////////////////// write the logic to select the board
-        // navigate to new board page
     }
 
     useEffect(() => {
         getMyBoards()
         .then(data => {
-            // setBoardArray(data)
             contextObj.setMyBoards(data)
         })
     }, [])
 
     return( <>
-        <dialog id="modalSelectBoard" className={`modal ${isModalOpen ? "modal-open" : null}`}>
+        <dialog id="modalSelectBoard" className={`modal modal-open`}>
             <div className="modal-box w-11/12 max-w-5xl"> 
                 <div className="flex flex-col w-full lg:flex-row">
-
                     <div className="grid flex-grow "> 
                         <h3 className="font-bold text-xl mb-4 ">Select a Board</h3>
                         <div className="overflow-y-auto max-h-72">
@@ -62,10 +45,8 @@ export default function ModalSelectBoard () {
                                 <hr/>
                                 {contextObj.myBoards && contextObj.myBoards.length ? 
                                     contextObj.myBoards.map(item => 
-                                        <div key={item.name}>
-                                            <li>
-                                                <Link href={`/board/${item.uuid}`} className="text-xl" >{item.name}</Link>
-                                            </li>
+                                        <div key={item.name + item.id}>
+                                            <li> <Link href={`/board/${item.uuid}`} className="text-base" >{item.name}</Link> </li>
                                             <hr/>
                                         </div>
                                     )
@@ -92,7 +73,6 @@ export default function ModalSelectBoard () {
                                 <h3 className="font-bold text-xl mb-4 ">Create an Account!</h3>
                                 <button className="btn btn-primary" onClick={() => router.push('/signup')} >Sign up</button>
                                 <button className="btn btn-outline btn-primary  my-4" onClick={() => router.push('/login')} >Log in</button>
-
                                 <ul className="list-disc list-inside">
                                     Benefits of an account:
                                     <li>Securely save your boards</li>
@@ -100,14 +80,12 @@ export default function ModalSelectBoard () {
                                     <li>Share with others</li>
                                 </ul>
                                 <br/>
-                                
                                 If you choose not to create an account,<br/>
                                 you can still use brainstormr.
                             </div>
                         </>
                     }
                 </div>
-
             </div>
         </dialog>
     </> )
