@@ -25,7 +25,7 @@ export function Header() {
             <div className="flex justify-between mb-1"> 
                 <BoardDisplay/> <UserDisplay/> 
             </div>
-            <hr/>
+            <hr  className=" h-0.5 bg-slate-700"/>
         </nav>
     )
 }
