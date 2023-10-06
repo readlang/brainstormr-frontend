@@ -57,9 +57,9 @@ export async function deleteBoard(boardId) {
     return data
 }
 
-export async function getCardsForBoard(boardId) {
+export async function getCardsForBoard(boardUuid) {
     console.log("getCardsForBoard");
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/board/${boardId}/cards`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/board/${boardUuid}/cards`, {
         method: 'get',
         credentials: "include"
     })
