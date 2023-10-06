@@ -49,11 +49,11 @@ export default function Page({params}) {
     return (
         <div className="relative">
             <NewCardButton/>
-            {/* {cardArray.map(card => <Card key={card.id} data={card}/> )} */}
+            {cardArray.map(card => <Card key={card.id} data={card}/> )}
 
             <Card data={cardArray[0]} />
-            <Draggable/>
             <Card data={cardArray[1]} />
+            <Draggable/>
         </div>
     )
 }

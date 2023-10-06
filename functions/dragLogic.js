@@ -14,7 +14,10 @@ export function dragLogic(dragState) {
         }
     }
 
-    window.onpointermove = (event) => move(event)
-    document.onpointerup = () => dragState.setDragging(false)
-    document.body.onpointerleave = () => dragState.setDragging(false)
+    if (typeof window !== 'undefined') {
+        // this will only run client-side (in browser)
+        document.onpointermove = (event) => move(event)
+        document.onpointerup = () => dragState.setDragging(false)
+        document.body.onpointerleave = () => dragState.setDragging(false)
+    }
 }
