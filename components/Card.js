@@ -45,3 +45,12 @@ export default function Card({data}) {
         </div>
     )
 }
+
+
+//info:
+/**
+ * position left/top vs. transform
+ * position: poor performance, better for static placed items
+ * transform: much improved performance - good for moving animations
+ */
+
