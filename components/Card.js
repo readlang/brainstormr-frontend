@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { LuMoveDiagonal2 } from "react-icons/lu";
 import { dragLogic } from "@/functions/dragLogic";
+import QuillBubble from "./QuillBubble";
 
 export default function Card({data}) {
     const pos = {x: data.position.split(",")[0], y: data.position.split(",")[1]}
@@ -28,7 +29,7 @@ export default function Card({data}) {
                         viewBox="0 0 512 512"><path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"/></svg>
                     </label>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 top-0 absolute">
-                        <li><a>Open Detail</a></li>
+                        <li><a onClick={()=>console.log("open detail")}>Open Detail</a></li>
                         <li><a>Copy</a></li>
                         <li><a>Color</a></li>
                         <li><a className="text-red-700">Delete</a></li>
@@ -38,6 +39,7 @@ export default function Card({data}) {
 
             <div className="m-2 bg-gray-200">
                 {data.content}
+                <QuillBubble/>
             </div>
             <div className="absolute bottom-0 right-0 cursor-move text-gray-300">
                 <LuMoveDiagonal2 size="1.25em" onClick={() => console.log("click")}/>
@@ -52,5 +54,8 @@ export default function Card({data}) {
  * position left/top vs. transform
  * position: poor performance, better for static placed items
  * transform: much improved performance - good for moving animations
+ * 
+ * overflow-y-auto overflow-x-visible
+ * 
  */
 

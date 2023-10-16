@@ -1,10 +1,13 @@
 "use client"
+import QuillBubble from "@/components/QuillBubble"
 // import Editor from "@/components/Editor"
-import Quill from "@/components/Quill"
+import QuillSnow from "@/components/QuillSnow"
 
 export default function Page() {
 	return(
-	    // <Editor/>
-		<Quill/>		
+		<>
+			<QuillSnow/>
+			<QuillBubble/>		
+		</>
 	)
 }
