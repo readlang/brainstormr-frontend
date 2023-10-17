@@ -1,11 +1,21 @@
 "use client"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { ContextStore } from "@/components/Context";
 import { LuMoveDiagonal2 } from "react-icons/lu";
 import { dragLogic } from "@/functions/dragLogic";
+import { deleteCard } from "@/appLogic/cardFetches";
 import QuillBubble from "./QuillBubble";
 
 export default function Card({data}) {
-    const pos = {x: data.position.split(",")[0], y: data.position.split(",")[1]}
+    const contextObj = useContext(ContextStore)
+    const pos = {x: data.position.split(",")[0], y: data.position.split(",")[1]};
+    const [confirmDelete, setConfirmDelete] = useState(false)
+
+    if (confirmDelete) {
+        setTimeout(() => {
+            setConfirmDelete(false);
+        }, 2000);
+    }
     
     const [dragging, setDragging] = useState(false)
     const [posX, setPosX] = useState(parseInt(pos.x))
@@ -18,6 +28,13 @@ export default function Card({data}) {
     }
 
     dragLogic(dragState)
+
+    function submitDelete() {
+        deleteCard(data.uuid)
+        contextObj.setActiveBoard({...contextObj.activeBoard, 
+            Cards: [...contextObj.activeBoard.Cards.filter(card => card.uuid !== data.uuid)]
+        })
+    }
     
     return(
         <div className="absolute rounded-md border border-gray-400 shadow-md bg-base-100 m-4 w-96 h-96 overflow-clip" 
@@ -32,7 +49,12 @@ export default function Card({data}) {
                         <li><a onClick={()=>console.log("open detail")}>Open Detail</a></li>
                         <li><a>Copy</a></li>
                         <li><a>Color</a></li>
-                        <li><a className="text-red-700">Delete</a></li>
+                        {!confirmDelete ? 
+                            <li><a className="text-red-700" onClick={()=>setConfirmDelete(true)}>Delete</a></li> :
+                            <div className="text-red-700 font-bold px-4 py-2 flex content-center">Confirm w/ check
+                                <input type="checkbox" className="checkbox checkbox-sm ml-4" onClick={submitDelete}/> 
+                            </div>
+                        }
                     </ul>
                 </div>
             </div>
@@ -48,14 +70,12 @@ export default function Card({data}) {
     )
 }
 
-
-//info:
 /**
+ * NOTES:
  * position left/top vs. transform
  * position: poor performance, better for static placed items
  * transform: much improved performance - good for moving animations
  * 
  * overflow-y-auto overflow-x-visible
- * 
  */
 
