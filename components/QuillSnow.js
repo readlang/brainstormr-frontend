@@ -1,12 +1,11 @@
 "use client"
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import ReactQuill from 'react-quill';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
-
 import '../styles/styles.css';
 
 export default function QuillSnow() {
-
 	const modules = {
 		toolbar: [
 			['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -27,11 +26,6 @@ export default function QuillSnow() {
 		}
 	}
 
-	/* 
-	* Quill editor formats
-	* See https://quilljs.com/docs/formats/
-	*/
-
 	const formats = [
 		'header', 'font', 'size',
 		'bold', 'italic', 'underline', 'strike', 'blockquote',
@@ -41,8 +35,7 @@ export default function QuillSnow() {
 	]
 	
 	const [value, setValue] = useState('this is the initial state text');
-	console.log(value);
-
+	// console.log(value);
 
 	return( <>
 		<ReactQuill
