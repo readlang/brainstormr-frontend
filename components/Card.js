@@ -3,7 +3,7 @@ import { useState, useContext } from "react"
 import { ContextStore } from "@/components/Context";
 import { LuMoveDiagonal2 } from "react-icons/lu";
 import { dragLogic } from "@/functions/dragLogic";
-import { deleteCard } from "@/appLogic/cardFetches";
+import { deleteCard, updateCard } from "@/appLogic/cardFetches";
 import QuillBubble from "./QuillBubble";
 
 export default function Card({data}) {
@@ -11,6 +11,7 @@ export default function Card({data}) {
     const pos = {x: data.position.split(",")[0], y: data.position.split(",")[1]};
     const [confirmDelete, setConfirmDelete] = useState(false)
 
+    // resets confirm delete checkbox after 2 seconds
     if (confirmDelete) {
         setTimeout(() => {
             setConfirmDelete(false);
@@ -35,9 +36,33 @@ export default function Card({data}) {
             Cards: [...contextObj.activeBoard.Cards.filter(card => card.uuid !== data.uuid)]
         })
     }
-    
+
+    // removes special html characters returned from DB
+    function decode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+
+    // card "content" state - decode() will remove special html characters from DB
+    const [lazyText, setLazyText] = useState( decode(data.content) )
+    const [currentText, setCurrentText] = useState( decode(data.content) )
+    const [timerActive, setTimerActive] = useState(false)
+
+    // if change in text, autosaves text every 5 seconds
+    if (timerActive === false && currentText !== lazyText) {
+        setTimerActive(true)
+        setTimeout(() => {
+            console.log("SAVE TO DB NOW")
+            // save to DB
+            updateCard(data.uuid, currentText, data.color, data.position, data.size)
+            // setLazyText to what was saved
+            setLazyText(currentText)
+            setTimerActive(false)
+        }, 5000);
+    }
+
     return(
-        <div className="absolute rounded-md border border-gray-400 shadow-md bg-base-100 m-4 w-96 h-96 overflow-clip" 
+        <div className="absolute rounded-md border border-gray-400 shadow-md bg-base-100 m-4 w-96 h-96 flex flex-col pb-3" 
             style={{transform: `translate(${posX}px, ${posY}px)`, userSelect: 'none', WebkitUserSelect: 'none'}}>
             <div className="h-8 bg-gray-200 p-1 cursor-move" onPointerDown={()=>setDragging(true)}>
                 <div className="dropdown relative">
@@ -59,9 +84,8 @@ export default function Card({data}) {
                 </div>
             </div>
 
-            <div className="m-2 bg-gray-200">
-                {data.content}
-                <QuillBubble/>
+            <div className="m-2 bg-gray-200 flex-grow" style={{overflowY: 'auto', overflowX: 'visible'}}>
+                <QuillBubble currentText={currentText} setCurrentText={setCurrentText}/>
             </div>
             <div className="absolute bottom-0 right-0 cursor-move text-gray-300">
                 <LuMoveDiagonal2 size="1.25em" onClick={() => console.log("click")}/>
@@ -78,4 +102,3 @@ export default function Card({data}) {
  * 
  * overflow-y-auto overflow-x-visible
  */
-

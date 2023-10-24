@@ -1,0 +1,30 @@
+.relative-wrap {
+    /*relative on second parent*/
+    position: relative;
+}
+
+.overflow-wrap {
+    height: 250px;
+    width: 250px;
+    background: lightblue;
+    
+    overflow: hidden;
+    /*no relative on immediate parent*/
+}
+
+.respect-overflow {
+    position: relative;
+    top: 75px;
+    left: 225px;
+    height: 50px;
+    width: 50px;
+    background: green;    
+}
+.fuck-overflow {
+    position: absolute;
+    top: 150px;
+    left: 225px;
+    height: 50px;
+    width: 50px;
+    background: red;
+}

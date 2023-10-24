@@ -17,13 +17,11 @@ export default function Page({params}) {
             if (data.error) {
                 console.error(data)
             } else {
-                contextObj.setActiveBoard(data) 
+                contextObj.setActiveBoard(data)    ///////////////////////// this is new
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    // console.log(contextObj.activeBoard.Cards)
 
     return (
         <div className="relative">

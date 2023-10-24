@@ -1,28 +1,42 @@
+/* first 2 are for snow specifically */
 .ql-snow.ql-toolbar {
   display: block;
   background: #eaecec;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 }
-
-
-/* min height of text box */
-.ql-editor {
-  min-height: 18em;
-}
-
-
 .ql-container.ql-snow {
   /* border-bottom-left-radius: 0.5em; */
   border-radius: 0 0 0.5em 0.5em;
 }
 
 
+
+/* this is parent to bubble */
 .ql-container.ql-bubble {
   border: 1px solid #ccc;
   border-radius: 0.5em;
+  
+  
+  
 }
 
-.ql-tooltip {
-  left: 0px;
-}
+/* max-height: 400px; 
+  position: static;
+*/
+
+/* this is sibling to bubble, should respect overflow */
+/* .ql-editor {
+  
+  position: relative;
+} */
+
+/* this is the actual bubble that should overflow the container */
+/* .ql-tooltip {
+  position: absolute;
+  transform: translate(8px, 50px);
+} */
+/* 
+.ql-bubble.ql-tooltip {
+  transform: translate(8px, 50px);
+} */

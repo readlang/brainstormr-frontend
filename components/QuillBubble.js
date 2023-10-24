@@ -1,22 +1,14 @@
 "use client"
 import dynamic from "next/dynamic";
-import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.bubble.css';
 import '../styles/styles.css';
 
-export default function QuillBubble() {
+export default function QuillBubble({currentText, setCurrentText}) {
+
 	const modules = {
 		toolbar: [
-			['bold', 'italic', 'underline', 'strike', 'blockquote', {size: []}],
-			[	{'list': 'ordered'}, 
-				{'list': 'bullet'}, 
-				{'indent': '-1'}, 
-				{'indent': '+1'},
-			],
-			['link' ],
-			[{color: ['black', 'red', 'orange', 'yellow', 'green', 'blue', 'magenta', ]}],
-			['clean']
+			['bold', 'italic', 'underline', 'strike'],
 		],
 		clipboard: {
 			// toggle to add extra line breaks when pasting HTML:
@@ -31,20 +23,16 @@ export default function QuillBubble() {
 		'link', 'image', 'video',
 		'color'
 	]
-	
-	const [value, setValue] = useState('this is the initial state text');
-	// console.log(value);
 
-	return( <>
-		<ReactQuill className='mt-4'
+	return( 
+		<ReactQuill className='quill-bubble-comp h-full overflow-y-scroll '
+			name = "editor"
 			theme="bubble" 
-			value={value} 
-			onChange={setValue}
+			value={currentText} 
+			onChange={setCurrentText}
 			modules={modules}
-        	formats={formats}
-        	
-        	placeholder={"notes go here..."}
+			formats={formats}
+			placeholder={"notes go here..."}
 		/>
-	</>
 	)
 }
