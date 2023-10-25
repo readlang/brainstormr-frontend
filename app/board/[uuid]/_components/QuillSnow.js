@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
-import '../styles/styles.css';
+import './styles.css';
 
 export default function QuillSnow() {
 	const modules = {

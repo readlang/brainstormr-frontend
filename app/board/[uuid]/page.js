@@ -2,14 +2,14 @@
 import { useEffect, useContext, useState } from 'react';
 import { ContextStore } from "@/components/Context";
 import { getCardsForBoard } from '@/appLogic/boardFetches';
-import { NewCardButton } from '@/components/NewCardButton';
-import ModalEditCard from '@/components/ModalEditCard';
-import Card from '@/components/Card';
-import Draggable from '@/components/Draggable';
+import { NewCardButton } from '@/app/board/[uuid]/_components/NewCardButton';
+import ModalEditCard from '@/app/board/[uuid]/_components/ModalEditCard';
+import Card from '@/app/board/[uuid]/_components/Card';
+import Draggable from '@/app/board/[uuid]/_components/Draggable';
 
 export default function Page({params}) {
     const contextObj = useContext(ContextStore)
-    const [editCard, setEditCard] = useState("") // to control EditCardModal
+    const [editCard, setEditCard] = useState("d") // to control EditCardModal
 
     useEffect(() => { 
         getCardsForBoard(params.uuid) 

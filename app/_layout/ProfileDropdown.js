@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import { useContext } from "react";
-import { ContextStore } from "./Context";
+import { ContextStore } from "../../components/Context";
 import { BsPersonCircle } from "react-icons/bs";
 
 export function ProfileDropdown() {

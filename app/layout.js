@@ -1,7 +1,7 @@
 import Context from "@/components/Context"
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer";
-import './globals.css';  // needed for tailwind
+import { Header } from "@/app/_layout/Header"
+import { Footer } from "@/app/_layout/Footer";
+import './_layout/globals.css'; // needed for tailwind
 
 export const metadata = {
   title: 'Brainstormr',
