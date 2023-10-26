@@ -6,7 +6,12 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // to use this font, use the "font-neue" utility class
+        neue: ['var(--font-neue-montreal)'],
+      },
+    },
   },
   plugins: [
     require("daisyui")

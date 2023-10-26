@@ -11,8 +11,8 @@ export function Header() {
             <div className="flex justify-between pt-5 items-center" >
                 <div className="flex items-center">
                     <Menu/>
-                    <Link href="/" className='text-xl font-bold text-gray-700 tracking-tighter'>
-                        BRAINSTORMR
+                    <Link href="/" className='text-xl font-bold text-gray-700 tracking-normal font-neue'>
+                        BRAINSTORMER
                     </Link>
                 </div>
                 
