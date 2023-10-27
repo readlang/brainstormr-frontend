@@ -1,11 +1,10 @@
 "use client"
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 import './styles.css';
 
-export default function QuillSnow() {
+export default function QuillSnow({currentText, setCurrentText}) {
 	const modules = {
 		toolbar: [
 			['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -34,18 +33,14 @@ export default function QuillSnow() {
 		'link', 'image', 'video',
 	]
 	
-	const [value, setValue] = useState('this is the initial state text');
-	// console.log(value);
-
-	return( <>
+	return( 
 		<ReactQuill
 			theme="snow" 
-			value={value} 
-			onChange={setValue}
+			value={currentText} 
+			onChange={setCurrentText}
 			modules={modules}
         	formats={formats}
-        	// bounds={'.app'}
         	placeholder={"notes go here..."}
 		/>
-	</> )
+	)
 }

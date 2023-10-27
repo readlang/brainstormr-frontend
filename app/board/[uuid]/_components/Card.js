@@ -5,6 +5,7 @@ import { LuMoveDiagonal2 } from "react-icons/lu";
 import { dragLogic } from "@/functions/dragLogic";
 import { deleteCard, updateCard } from "@/appLogic/cardFetches";
 import QuillBubble from "./QuillBubble";
+import ModalQuillEditor from "./ModalQuillEditor";
 
 export default function Card({data}) {
     const contextObj = useContext(ContextStore)
@@ -64,6 +65,7 @@ export default function Card({data}) {
     return(
         <div className="absolute rounded-md border border-gray-400 shadow-md bg-base-100 m-4 w-96 h-96 flex flex-col pb-3" 
             style={{transform: `translate(${posX}px, ${posY}px)`, userSelect: 'none', WebkitUserSelect: 'none'}}>
+
             <div className="h-8 bg-gray-200 p-1 cursor-move" onPointerDown={()=>setDragging(true)}>
                 <div className="dropdown relative">
                     <label tabIndex={0} className="btn btn-square btn-xs btn-ghost p-0">
@@ -71,7 +73,7 @@ export default function Card({data}) {
                         viewBox="0 0 512 512"><path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"/></svg>
                     </label>
                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 top-0 absolute">
-                        <li><a onClick={()=>console.log("open detail")}>Open Detail</a></li>
+                        <li><a onClick={() => document.getElementById(`my_modal_${data.id}`).showModal()}>Open Detail</a></li>
                         <li><a>Copy</a></li>
                         <li><a>Color</a></li>
                         {!confirmDelete ? 
@@ -83,6 +85,8 @@ export default function Card({data}) {
                     </ul>
                 </div>
             </div>
+
+            <ModalQuillEditor data={data} currentText={currentText} setCurrentText={setCurrentText}/>
 
             <div className="m-2 bg-gray-200 flex-grow" style={{overflowY: 'auto', overflowX: 'visible'}}>
                 <QuillBubble currentText={currentText} setCurrentText={setCurrentText}/>
